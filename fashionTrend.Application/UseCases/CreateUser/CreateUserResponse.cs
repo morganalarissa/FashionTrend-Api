@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace fashionTrend.Domain.Entities
+namespace fashionTrend.Application.UseCases.CreateUser
 {
-    //quero garantir que ela não possa ser herdada
-    public sealed class User : BaseEntity
+    public sealed record CreateUserResponse
     {
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }

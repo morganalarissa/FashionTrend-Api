@@ -10,4 +10,8 @@
     <ProjectReference Include="..\fashionTrend.Application\fashionTrend.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.11" />
+  </ItemGroup>
+
 </Project>
