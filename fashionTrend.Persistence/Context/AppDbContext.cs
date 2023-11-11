@@ -18,6 +18,10 @@ namespace fashionTrend.Persistence.Context
         // que vem do Entities do nosso Domain ao banco de dados
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<Service> Services { get; set; }
+        public DbSet<ServiceOrder> ServiceOrders { get; set; }
+        public DbSet<Contract> Contracts { get; set; }
 
     }
 }

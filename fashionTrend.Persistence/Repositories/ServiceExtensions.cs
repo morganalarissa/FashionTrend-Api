@@ -27,6 +27,11 @@ namespace fashionTrend.Persistence.Repositories
             // Toda a construção de escopo da nossa aplicação ficará aqui
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ISupplierRepository, SupplierRepository>();
+            services.AddScoped<IServiceRepository, ServiceRepository>();
+            services.AddScoped<IServiceOrderRepository, ServiceOrderRepository>();
+            services.AddScoped<IContractRepository, ContractRepository>();
+
         }
     }
 }

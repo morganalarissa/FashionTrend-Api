@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace fashionTrend.Application.UseCases.CreateUser
 {
-    public class CreateUserMapper : Profile
+    public class CreateServiceOrdersMapper : Profile
     {
-        public CreateUserMapper()
+        public CreateServiceOrdersMapper()
         {
-            CreateMap<CreateUserRequest, User>();
-            CreateMap<User, CreateUserResponse>();
+            CreateMap<CreateServiceOrdersRequest, ServiceOrder>();
+            CreateMap<ServiceOrder, CreateServiceOrdersResponse>();
         }
     }
 }
