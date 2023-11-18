@@ -18,6 +18,8 @@
 
   <ItemGroup>
     <Folder Include="Shared\Exceptions\" />
+    <Folder Include="UseCases\MessageCases\GetAllMessage\" />
+    <Folder Include="UseCases\MessageCases\UpdateMessage\" />
   </ItemGroup>
 
 </Project>
