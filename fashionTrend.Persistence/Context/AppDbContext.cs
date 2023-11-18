@@ -18,7 +18,6 @@ namespace fashionTrend.Persistence.Context
         // DB set ele é a representação de uma tabela
         // que vem do Entities do nosso Domain ao banco de dados
 
-       
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<Service> Services { get; set; }
         public DbSet<ServiceOrder> ServiceOrders { get; set; }
@@ -58,8 +57,6 @@ namespace fashionTrend.Persistence.Context
                         .Select(s => (ESewingMachine)Enum.Parse(typeof(ESewingMachine), s))
                         .ToList());
 
-            //base.OnModelCreating(modelBuilder);
         }
-
     }
 }
