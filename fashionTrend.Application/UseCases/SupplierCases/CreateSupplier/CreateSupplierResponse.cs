@@ -12,6 +12,7 @@ namespace fashionTrend.Application.UseCases.SupplierCases.CreateSupplier
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
+        public string Telephone { get; set; }
         public List<ESewingMachine> SewingMachines { get; set; }
         public List<EMaterial> Materials { get; set; }
         //public string Password { get; set; }

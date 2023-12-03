@@ -13,17 +13,50 @@ namespace fashionTrend.Persistence.Repositories
     public class KafkaProducer : IKafkaProducer
     {
         private readonly IProducer<string, string> _producer;
+
         public KafkaProducer()
         {
-            //configuração do servidor local do cluster do kafka
             var config = new ProducerConfig
             {
-                BootstrapServers = "localhost: 9092", // Endereço do servidor do kafka
+                BootstrapServers = "localhost:9092",
             };
-            // adicionando ao produtor o servidor do kafka
+
             _producer = new ProducerBuilder<string, string>(config).Build();
         }
+
         public async Task<Message> ProduceAsync(string topic, string sender, string receiver, string content)
+        {
+
+            var message = new Message
+            {
+                Id = Guid.NewGuid(),
+                Sender = sender,
+                Receiver = receiver,
+                Content = content,
+                Timestamp = DateTime.UtcNow,
+                Status = "em processamento"
+            };
+
+            string serielizedMessage = JsonSerializer.Serialize(message);
+
+            var deliveryReport = await _producer.ProduceAsync(topic, new Message<string, string>
+            {
+                Value = serielizedMessage
+            });
+
+            if (deliveryReport.Status == PersistenceStatus.NotPersisted)
+            {
+                message.Status = " com erro";
+                return message;
+            }
+            else
+            {
+                message.Status = " com sucesso";
+                return message;
+            }
+        }
+
+        public async Task<Message> ProduceAsyncWithRetry(string topic, string sender, string receiver, string content)
         {
             var message = new Message
             {
@@ -35,26 +68,39 @@ namespace fashionTrend.Persistence.Repositories
                 Status = "em processamento"
             };
 
-            // Serializar a mensagem
             string serielizedMessage = JsonSerializer.Serialize(message);
 
-            // Chamar o metodo que produz a mensagem do confluent kafka
-            var deliveryReport = await _producer.ProduceAsync(topic, new Message<string, string>
+            int maxRetries = 3;
+            int retryIntervalms = 1000;
+
+            for (int attemp = 1; attemp <= maxRetries; attemp++)
             {
-                Value = serielizedMessage
-            });
-            
-            // Verifica se a mensagem foi entregue com sucesso
-            if(deliveryReport.Status == PersistenceStatus.NotPersisted) 
-            {
-                message.Status = " com erro";
-                return message;
+                try
+                {
+                    var deliveryReport = await _producer.ProduceAsync(topic, new Message<string, string>
+                    {
+                        Value = serielizedMessage
+                    });
+
+                    message.Status = "com sucesso";
+                    break;
+
+                }
+                catch (ProduceException<Null, string>)
+                {
+                    if (attemp < maxRetries)
+                    {
+                        Thread.Sleep(retryIntervalms);
+                        message.Status = "Retry";
+                    }
+                    else
+                    {
+                        message.Status = "com erro após o retry";
+                        throw;
+                    }
+                }
             }
-            else
-            {
-                message.Status = " com sucesso";
-                return message;
-            }
+            return message;
         }
     }
 }

@@ -22,6 +22,7 @@ namespace fashionTrend.Persistence.Context
         public DbSet<Service> Services { get; set; }
         public DbSet<ServiceOrder> ServiceOrders { get; set; }
         public DbSet<Contract> Contracts { get; set; }
+        public DbSet<DraftContract> DraftContracts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

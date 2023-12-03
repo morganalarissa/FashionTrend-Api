@@ -1,4 +1,5 @@
-﻿using fashionTrend.Domain.Interfaces;
+﻿using fashionTrend.Domain.Entities;
+using fashionTrend.Domain.Interfaces;
 using fashionTrend.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -31,6 +32,8 @@ namespace fashionTrend.Persistence.Repositories
             services.AddScoped<IServiceOrderRepository, ServiceOrderRepository>();
             services.AddScoped<IContractRepository, ContractRepository>();
             services.AddScoped<IKafkaProducer, KafkaProducer>();
+            services.AddScoped<IKafkaConsumer, KafkaConsumer>();
+            services.AddScoped<IDraftContractRepository, DraftContractRepository>();
         }
     }
 }

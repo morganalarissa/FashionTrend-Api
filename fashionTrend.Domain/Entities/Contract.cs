@@ -8,6 +8,8 @@ namespace fashionTrend.Domain.Entities
 {
     public sealed class Contract : BaseEntity
     {
+        public DraftContract DraftContract { get; set; }
+        public DateTime Assigned {  get; set; }
         public Guid OrderId { get; set; }
         public Guid SupplierId { get; set; }
         public DateTimeOffset StartDate { get; set; }
